@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng đối tượng Array</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3b3797;
+            padding: 1rem 0;
+        }
+
+        input {
+            width: 2rem;
+            padding: 0.2rem;
+            cursor: pointer;
+        }
+
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 30rem;
+        }
+
+
+        label {
+            float: left;
+            color: #372f94;
+        }
+
+
+        table tr td {
+            border: 2px solid #6f58b7;
+            padding: 0.5rem;
+        }
+
+
+        .box-btnCreate {
+            width: 8rem;
+        }
+
+
+        .box-input {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .btn-createArr {
+            padding: 0.1rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn-createArr:active,
+        .btn-add:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+
+        #arrRandom {
+            color: #5160d8;
+        }
+
+        #result {
+            color: #5160d8;
+        }
+
+        .txtValues {
+            font-size: 1rem;
+            color: #e5863f;
+        }
+
+        .box-radio {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box-radio .item {
+            display: flex;
+            align-items: center;
+            padding: 0.3rem;
+            color: #6252c8;
+            cursor: pointer;
+        }
+
+        .box-addItem {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .box-addItem .item-add {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .box-addItem .item-add input {
+            width: 5rem;
+        }
+
+        .box-btnAdd .btn-add {
+            padding: 0.1rem 0.2rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Thao tác trên mảng</h2>
+        <table>
+            <tr>
+                <td class="box-btnCreate">
+                    <div>
+                        <button class="btn-createArr" onclick="tao_mang()">Tạo mảng</button>
+                    </div>
+                </td>
+                <td>
+                    <div id="arrRandom"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="txtValues">Giá trị của mảng sau khi xử lý</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="box-radio">
+                        <div class="item">
+                            <input type="radio" name="sort" onclick="sap_xep_tang_dan()" />
+                            <span>Xắp xếp tăng</span>
+                        </div>
+                        <div class="item">
+                            <input type="radio" name="sort" onclick="sap_xep_giam_dan()" />
+                            <span>Xắp xếp giảm</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="box-addItem">
+                        <div class="item-add">
+                            <span>Thêm vào vị trí</span>
+                            <input type="number" id="positionIndex">
+                        </div>
+                        <div class="item-add">
+                            <span>Giá trị</span>
+                            <input type="number" id="positionValue">
+                        </div>
+                        <div class="box-btnAdd">
+                            <button class="btn-add" onclick="addValueIndex()">Thêm</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <script>
+        var inputPositionIndex = document.getElementById('positionIndex');
+        var inputPositionValue = document.getElementById('positionValue');
+        var arrRandomEl = document.getElementById('arrRandom');
+        var result = document.getElementsByClassName('txtValues')[0];
+
+        var listCurrent = [];
+
+
+        function addValueIndex() {
+            let index = inputPositionIndex.value - 1;
+            let value = inputPositionValue.value;
+
+            if (!index && !value) return;
+
+            listCurrent[index] = parseInt(value);
+            showArrSort(listCurrent);
+        }
+
+
+        function sap_xep_tang_dan() {
+            let arrSoft = bubbleSoftUp(listCurrent, listCurrent.length);
+            showArrSort(arrSoft);
+        }
+
+        function sap_xep_giam_dan() {
+            let arrSoft = bubbleSoftDown(listCurrent, listCurrent.length);
+            showArrSort(arrSoft)
+        }
+
+        function swap(x, y, cb) {
+            temp = x;
+            x = y;
+            y = temp;
+            return cb(x, y);
+        }
+
+        function bubbleSoftUp(arr, n) {
+            haveSwap = false;
+
+            for (let i = 0; i <= n - 1; i++) {
+                haveSwap = false;
+                for (let j = 0; j < n - i - 1; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        swap(arr[j], arr[j + 1], (x, y) => {
+                            arr[j] = x;
+                            arr[j + 1] = y;
+                        });
+                        haveSwap = true;
+                    }
+                }
+                if (haveSwap == false) {
+                    break;
+                }
+            }
+            return arr;
+        }
+
+
+        function bubbleSoftDown(arr, n) {
+            haveSwap = false;
+
+            for (let i = 0; i <= n - 1; i++) {
+                haveSwap = false;
+                for (let j = 0; j < n - i - 1; j++) {
+                    if (arr[j] < arr[j + 1]) {
+                        swap(arr[j], arr[j + 1], (x, y) => {
+                            arr[j] = x;
+                            arr[j + 1] = y;
+                        });
+                        haveSwap = true;
+                    }
+                }
+                if (haveSwap == false) {
+                    break;
+                }
+            }
+            return arr;
+        }
+
+        function showArrSort(arr) {
+            result.innerHTML = '';
+            result.innerHTML = arr.join(', ');
+        }
+
+
+        function getRandomNumberBetween(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        function tao_mang() {
+            listCurrent.length = getRandomNumberBetween(10, 20);
+
+            for (let i = 0; i < listCurrent.length; i++) {
+                listCurrent[i] = getRandomNumberBetween(10, 100)
+            }
+
+            arrRandomEl.innerHTML = listCurrent.join(', ');
+        }
+
+    </script>
+</body>
+
+</html>

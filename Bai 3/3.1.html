@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng hộp thoại</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        label {
+            color: #3cb294;
+        }
+
+        .btn-hello {
+            padding: 0.2rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn-hello:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+
+        #nameTxt {
+            padding: 0.2rem;
+            font-size: 0.3rem;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dafed8;
+        }
+
+
+        table tr td {
+            border: 2px solid #60e44a;
+            padding: 0.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <div class="container">
+            <table>
+                <tr>
+                    <td><label for="nameTxt">Nhập tên bạn: </label> <input type="text" name="name" id="nameTxt"
+                            placeholder="Nhập tên của bạn"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn-hello" type="button" onclick="ShowAlert()">Xuất câu chào</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+    <script>
+        let inputName = document.getElementById('nameTxt');
+
+        function ShowAlert() {
+            if (inputName.value == '') {
+                alert("Name must be filled out");
+                return false;
+            }
+            alert(`Chào bạn ${inputName.value} !`);
+        }
+
+    </script>
+</body>
+
+</html>

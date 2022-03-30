@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng đối tượng String và Array</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #cb6c2d;
+            padding: 1rem 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 30rem;
+        }
+
+
+        label {
+            color: #0d0ff4;
+        }
+
+
+        table tr td {
+            border: 2px solid #7f66c1;
+            padding: 0.5rem;
+        }
+
+        .box-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .box-btn-check {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-check {
+            padding: 0.1rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn-check:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+
+        .box-result {
+            display: none;
+        }
+
+        .box-result #result {
+            color: #efaa8e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Kiểm tra tính đối xứng của một chuỗi</h2>
+        <table>
+            <tr>
+                <td>
+                    <label>Nhập một chuỗi</label>
+                </td>
+                <td>
+                    <input type="text" id="stringAny">
+                </td>
+            </tr>
+            <tr class="box-result">
+                <td colspan="2">
+                    <div id="result">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="box-btn-check">
+                        <button class="btn-check" onclick="kiem_tra_chuoi()">kiểm tra</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        let inputA = document.getElementById('stringAny');
+        let boxResultEl = document.getElementsByClassName('box-result')[0];
+        let resultEl = document.getElementById('result');
+
+        function isEnd(arr) {
+            return arr.length === 0 || arr.length === 1;
+        }
+
+        function checkDoixung(str) {
+            var str = str.trim();
+            let arr = str.split("");
+
+            let firstChar = arr[0];
+            let lastChar = arr[arr.length - 1];
+
+            if (firstChar === lastChar) {
+                arr.shift();
+                arr.pop();
+                if (isEnd(arr)) {
+                    return true;
+                } else {
+                    let newStr = arr.join("");
+                    return checkDoixung(newStr);
+                }
+            }
+            return false;
+        }
+
+        function kiem_tra_chuoi() {
+            let str = inputA.value;
+            if (!str) {
+                alert("Bạn chưa nhập chuỗi nào")
+                return
+            }
+            boxResultEl.style.display = "contents";
+            resultEl.innerHTML = checkDoixung(str) ? "Chuỗi này đọc ngược đọc xuôi đều giống nhau" : "Chuỗi này đọc ngược đọc xuôi không giống nhau";
+        }
+
+    </script>
+</body>
+
+</html>

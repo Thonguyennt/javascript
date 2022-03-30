@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng DOM và các sự kiện</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+        :root {
+            --red: #cc0001;
+            --primary: #316ac4;
+            --blue: #401fa4;
+            --border-blue: 1px solid var(--blue);
+            --border-red: 1px solid var(--red);
+            --black: rgb(20, 20, 20);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.2s linear;
+        }
+
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            scroll-padding-top: 9rem;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container .title {
+            padding: 1.5rem 0;
+            font-size: 3.5rem;
+            letter-spacing: 2px;
+            color: var(--red);
+        }
+
+
+        .box-table {
+            border-collapse: collapse;
+            width: 70rem;
+        }
+
+        .box-table th,
+        .box-table td {
+            padding: 0.7rem;
+            border: var(--border-blue);
+        }
+
+        .box-table thead {
+            color: var(--blue);
+            font-size: 1.7rem;
+        }
+
+        .box-table tbody .box-check {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            top: -3rem;
+        }
+
+        .box-table tbody .col-checkbox {
+            width: 25rem;
+        }
+
+        .box-table tbody .item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4.5px;
+            color: var(--blue);
+            padding: 0.3rem;
+            cursor: pointer;
+        }
+
+        .box-table tbody .box-star h3 {
+            font-size: 1.7rem;
+            color: var(--blue);
+        }
+
+        .box-star .items-star {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 2rem;
+        }
+
+        .items-star .star input,
+        .items-star .star {
+            cursor: pointer;
+        }
+
+
+        .title-cost {
+            font-size: 1.7rem;
+            padding: 0.5rem;
+            color: var(--red);
+            font-weight: 500;
+        }
+
+        .title-cost span {
+            font-weight: bolder;
+        }
+
+        .box-btn-cost {
+            padding: 1px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .box-btn-cost button {
+            padding: 0 2rem;
+            font-size: 2rem;
+            color: #fff;
+            background: var(--red);
+            cursor: pointer;
+        }
+
+        .box-tour {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .box-tour .select-tours {
+            cursor: pointer;
+        }
+
+        .box-tour .box-subtour {
+            height: 15rem;
+        }
+
+        .box-tour .box-subtour h3 {
+            font-size: 1rem;
+            color: var(--red);
+            padding-top: 1.5rem;
+            font-weight: 100;
+            padding-bottom: 0.2rem;
+            text-align: center;
+        }
+
+        .box-tour .box-subtour .itemSofTour {
+            width: 21rem;
+            height: 11rem;
+            overflow: auto;
+            border: 2px solid gray;
+            padding: 0.5rem;
+            line-height: 20px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h3 class="title">Tính chi phí du lịch</h3>
+
+        <table class="box-table">
+            <thead>
+                <tr>
+                    <th>Chọn tour</th>
+                    <th>Chọn dịch vụ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="box-tour">
+                            <select class="select-tours" onchange="selectTourChange()">
+                                <option value="T0">------ Chọn tour du lịch ------</option>
+                            </select>
+                            <div class="box-subtour">
+                                <h3>Gồm các địa điểm tham quan</h3>
+                                <div class="itemSofTour">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-checkbox">
+                        <div class="box-check">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <form class="box-star">
+                            <h3>
+                                Chọn tiêu chuẩn khách sạn
+                            </h3>
+                            <div class="items-star">
+                                <div class="star">
+                                    <input type="radio" name="star" id="star-1" onclick="chooseStar(1)">
+                                    <span>*</span>
+                                </div>
+                                <div class="star">
+                                    <input type="radio" name="star" id="star-2" onclick="chooseStar(2)">
+                                    <span>**</span>
+                                </div>
+                                <div class="star">
+                                    <input type="radio" name="star" id="star-3" onclick="chooseStar(3)">
+                                    <span>***</span>
+                                </div>
+                                <div class="star">
+                                    <input type="radio" name="star" id="star-4" onclick="chooseStar(4)">
+                                    <span>****</span>
+                                </div>
+                                <div class="star">
+                                    <input type="radio" name="star" id="star-5" onclick="chooseStar(5)">
+                                    <span>*****</span>
+                                </div>
+                            </div>
+
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h3 class="title-cost">Tổng chi phí: <span id="totalPrice"></span></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="box-btn-cost">
+                            <button onclick="tinh_tien()">Tính chi phí</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <script src="4.9_ThuVien.js"></script>
+    <script src="mock_data.js"></script>
+
+    <script>
+        var boxCheckEl = document.getElementsByClassName('box-check')[0];
+        var selectTourEl = document.getElementsByClassName('select-tours')[0];
+        var itemOfTourEl = document.getElementsByClassName('itemSofTour')[0];
+        var totalPriceEl = document.getElementById("totalPrice");
+
+        listServiceSelect = [];
+        listTourSelect = [];
+        objStar = {};
+
+
+        function createElemntChekBox(item) {
+            var el = document.createElement("input");
+            el.type = "checkbox";
+            el.value = item.id;
+            el.id = `checkbox-${item.id}`;
+
+            return el;
+        }
+
+        function createElmentService(item) {
+            var elDiv = document.createElement("div");
+            var elSpan = document.createElement("span");
+
+            elDiv.className = `item item-${item.id}`;
+
+            elSpan.textContent = item.name;
+
+            var elCheckBox = createElemntChekBox(item)
+
+            elDiv.append(elCheckBox, elSpan);
+            boxCheckEl.appendChild(elDiv);
+
+        }
+
+        function createElementSelectOptions(arrNameTour) {
+            var nodes = arrNameTour.map(v => {
+
+                let el = document.createElement("option");
+                el.id = `tour-${v.id}`,
+                    el.textContent = v.name;
+                el.value = v.id;
+
+                return el;
+            })
+            selectTourEl.append(...nodes)
+        }
+
+        function createElementItemOfTour(arrPlaces) {
+            let nodes = arrPlaces.map((v) => {
+                var elDiv = document.createElement("div");
+                elDiv.textContent = v;
+
+                return elDiv
+            })
+
+            itemOfTourEl.append(...nodes);
+        }
+
+        function removeChildElTour() {
+            while (itemOfTourEl.lastElementChild) {
+                itemOfTourEl.removeChild(itemOfTourEl.lastElementChild)
+            }
+        }
+
+        function findIdInStr(str) {
+            if (!str) return;
+
+            const regex = /\d/g;
+            const arrNumber = str.match(regex);
+            var index = arrNumber && arrNumber.length > 0 ? arrNumber[0] : null;
+            return index;
+        }
+
+        function getDataReturnArr(arr, id) {
+            if (!arr && arr.length == 0) return;
+            var result = arr.find(item => item.id == id);
+            return result || null;
+        }
+
+        function indexOfArray(arr, value) {
+            let id = parseInt(value)
+
+            if (arr.length == 0) return;
+
+            index = arr.map(function (e) { return e.id; }).indexOf(id);
+            return index;
+        }
+
+        function chooseStar(val) {
+            if (!val) return;
+            objStar = listStars.find(v => v.star == val);
+        }
+
+
+        function selectTourChange() {
+            listTourSelect = [];
+
+            let id = selectTourEl.value;
+            if (id == null) return
+
+            let data = getDataReturnArr(listTours, id);
+            if (data == null) {
+            
+                itemOfTourEl.style.display = "none";
+                removeChildElTour();
+                return;
+            }
+
+            listTourSelect.push(data)
+
+            let arrPlaces = listTours.filter(v => v.id == id)
+                .map(v => v.places)[0];
+
+            // reset child of place
+            removeChildElTour()
+
+            itemOfTourEl.style.display = "block";
+            // Create element of place
+            createElementItemOfTour(arrPlaces);
+        }
+
+
+        boxCheckEl.addEventListener('click', (ev) => {
+            var idItemInput = ev.target.id;
+
+            var id = findIdInStr(idItemInput);
+            if (id == null) return
+
+            let data = getDataReturnArr(serviceTour, id);
+            //  find index in listServiceSelect
+            let index = indexOfArray(listServiceSelect, id);
+
+            if (listServiceSelect.length > 0 && index > -1) {
+                listServiceSelect.splice(index, 1);
+
+            } else {
+                listServiceSelect.push(data)
+            }
+        })
+
+        function tinh_tien() {
+            let totalHotel = 0;
+            let totalService = 0;
+
+            if (listTourSelect.length == 0) {
+                alert("Xin vui lòng chọn tour");
+                return
+            }
+
+            if (listServiceSelect.length == 0) {
+                alert("Xin vui lòng chọn dịch vụ");
+                return
+            }
+
+            if (Object.keys(objStar).length == 0) {
+                alert("Xin vui lòng chọn *");
+                return
+            }
+
+
+            totalHotel = listTourSelect[0].day * objStar.price;
+            totalService = listServiceSelect.reduce((acc, curr) => {
+                return acc + curr.price
+            }, 0)
+
+            totalMoney = totalHotel + totalService;
+            totalPriceEl.innerHTML = dinh_dang_so(totalMoney)
+        }
+
+        function initital() {
+            var listOptionTour = [];
+
+            serviceTour.forEach(item => {
+                createElmentService(item, 'service');
+            });
+
+            //Create elemnt dom select
+            createElementSelectOptions(listTours)
+        }
+        window.onload = initital();
+    </script>
+</body>
+
+</html>

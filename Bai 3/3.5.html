@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cấu trúc switch</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #036b06;
+            padding: 1rem 0;
+        }
+
+        .box-salary,
+        .box-rank {
+            width: 4rem;
+        }
+
+        .box-salary input {
+            width: 5rem;
+            padding: 0.1rem;
+        }
+
+        label {
+            float: left;
+            color: #2a9f16;
+        }
+
+        .bx-calculator {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-calculator {
+            padding: 0.2rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+
+        }
+
+        .btn-calculator:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+
+        #nameTxt {
+            padding: 0.5rem;
+            font-size: 0.3rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 30rem;
+        }
+
+        table td {
+            background: #dafed8;
+        }
+
+
+        table tr td {
+            border: 2px solid #60e44a;
+            padding: 0.5rem;
+        }
+
+        .bonus {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Tính tiền thưởng cuối năm</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="salary">Tiền lương: </label>
+                    </td>
+                    <td>
+                        <div class="box-salary">
+                            <input type="text" name="salary" id="salary">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="ranked">Xếp loại: </label></td>
+                    <td>
+                        <div class="box-rank">
+                            <select id="ranked">
+                                <option value="A">Loại A</option>
+                                <option value="B">Loại B</option>
+                                <option value="C">Loại C</option>
+                                <option value="D">Loại D</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="bx-btn">
+                    <td colspan="2">
+                        <div class="bx-calculator">
+                            <button class="btn-calculator" type="button" onclick="showResult()">Tính</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="result"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var inputSalary = document.getElementById('salary');
+        var inputRanked = document.getElementById('ranked');
+        var inputResult = document.getElementById('result');
+
+
+        function showElNameLable(result) {
+            inputResult.style.display = 'contents';
+            inputResult.innerHTML = `<td colspan="2"><h3 style="color:#f75f8a" class="bonus">Tiền thường lả : ${result} đồng</h3></td>`
+        }
+
+        function isNumeric(str) {
+            if (typeof str != "string") return false;
+            return !isNaN(str) &&
+                !isNaN(parseFloat(str))
+        }
+
+        function showResult() {
+            var numRank = 0;
+            var salary = inputSalary.value;
+            var ranked = inputRanked.value;
+
+            if (!isNumeric(salary)) {
+                alert("Xin vui lòng nhập số tiền ")
+                return
+            };
+
+            switch (ranked) {
+                case "A":
+                    numRank = 2
+                    break;
+                case "B":
+                    numRank = 1.8
+                    break;
+                case "C":
+                    numRank = 1.2
+                    break;
+                case "D":
+                    numRank = 0.8
+                    break;
+
+                default:
+                    numRank = 0
+                    break;
+            }
+            var result = salary * numRank
+
+            showElNameLable(result);
+        }
+
+    </script>
+</body>
+
+</html>

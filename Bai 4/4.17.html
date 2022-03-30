@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng các đối tượng</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 62.5%;
+            padding-top: 9rem;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container h2 {
+            font-size: 3rem;
+            font-weight: bolder;
+            color: #cf6a2c;
+            padding: 0.5rem;
+            margin-bottom: 3rem;
+        }
+
+
+        input {
+            width: 4rem;
+            padding: 0.3rem;
+            font-size: 1rem;
+        }
+
+
+        .box-calender {
+            position: relative;
+            width: 50rem;
+            overflow: hidden;
+            border: 1px solid #d88451;
+        }
+
+        .box-calender .info {
+            height: 8rem;
+            border-bottom: 1px solid gray;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            background: #fefecc;
+            color: #a51315;
+        }
+
+        .box-calender .info .year span,
+        .box-calender .info .month span {
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .box-calender .box-header {
+            display: grid;
+            border-bottom: 1px solid gray;
+            grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+        }
+
+        .box-header .date-name {
+            padding: 0.5rem;
+            border: 1px solid gray;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            background: #cbcdcc;
+        }
+
+        .box-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+        }
+
+        .box-body .day {
+            padding: 0.5rem;
+            border: 1px solid gray;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .active {
+            color: orange;
+        }
+
+        .activeSun {
+            color: red;
+        }
+
+        .activeSat {
+            color: #2a3ff6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Lịch để bàn</h2>
+
+        <div class="box-calender">
+            <div class="info">
+                <div class="year">
+                    <span>Year</span>
+                    <select class="year-option" onchange="selectCurrentYear()">
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+                <div class="month">
+                    <span>Month</span>
+                    <select class="month-option" onchange="selectCurrentMonth()">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+            </div>
+            <div class="box-header">
+                <div class="date-name activeSun">CN</div>
+                <div class="date-name">Hai</div>
+                <div class="date-name">Ba</div>
+                <div class="date-name">Tư</div>
+                <div class="date-name">Năm</div>
+                <div class="date-name">Sáu</div>
+                <div class="date-name activeSat">Bảy</div>
+            </div>
+            <div class="box-body date-container">
+                <div class="day"></div>
+                <div class="day">1</div>
+                <div class="day">2</div>
+                <div class="day">3</div>
+                <div class="day">4</div>
+                <div class="day">5</div>
+                <div class="day">6</div>
+                <div class="day">7</div>
+                <div class="day">8</div>
+                <div class="day">9</div>
+                <div class="day">10</div>
+                <div class="day">11</div>
+                <div class="day">12</div>
+                <div class="day">13</div>
+                <div class="day">14</div>
+                <div class="day">15</div>
+                <div class="day">16</div>
+                <div class="day">17</div>
+                <div class="day">18</div>
+                <div class="day">19</div>
+                <div class="day">20</div>
+                <div class="day">21</div>
+                <div class="day">22</div>
+                <div class="day">23</div>
+                <div class="day">24</div>
+                <div class="day">25</div>
+                <div class="day">26</div>
+                <div class="day">27</div>
+                <div class="day">28</div>
+                <div class="day">29</div>
+                <div class="day">30</div>
+                <div class="day">31</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var monthEle = document.querySelector('.month');
+        var yearEle = document.querySelector('.year');
+        var dateEle = document.querySelector('.date-container');
+        var yearOptionEl = document.querySelector('.year-option')
+        var monthOptionEl = document.querySelector('.month-option')
+
+        var currentMonth = new Date().getMonth();
+        var currentYear = new Date().getFullYear();
+        var currentDay = new Date().getDay();
+
+        function renderSelectYearAndMonth() {
+            listYearRange = [];
+
+            //currentYear - 5
+            for (let i = currentYear - 5; i < currentYear; i++) {
+                listYearRange.push(i);
+            }
+            // currentYear + 5
+            for (let i = currentYear; i <= currentYear + 5; i++) {
+                listYearRange.push(i);
+            }
+
+
+            yearOptionEl.innerHTML = '';
+            let monthChildren = monthOptionEl.children;
+            let renderCurrentMonth = currentMonth + 1;
+
+            for (let i = 0; i < listYearRange.length; i++) {
+                //set Default option year
+                if (currentYear === parseInt(listYearRange[i])) {
+                    yearOptionEl.innerHTML += `<option value="${listYearRange[i]}" selected>${listYearRange[i]}</option>`;
+                } else {
+                    yearOptionEl.innerHTML += `<option value="${listYearRange[i]}">${listYearRange[i]}</option>`;
+                }
+            }
+
+
+            //set Default option month
+            for (let index = 0; index < monthChildren.length; index++) {
+                if (monthChildren[index].getAttribute('value') == renderCurrentMonth) {
+                    monthChildren[index].setAttribute("selected", '')
+                }
+
+            }
+        }
+
+        // Chọn năm
+        function selectCurrentYear() {
+            var index = yearOptionEl.selectedIndex
+            var yearSelect = yearOptionEl.children[index].getAttribute('value');
+            currentYear = new Date(yearSelect).getFullYear();
+            renderDate()
+        }
+
+        // Chọn tháng
+        function selectCurrentMonth() {
+            var index = monthOptionEl.selectedIndex;
+            var monthSelect = monthOptionEl.children[index].getAttribute('value');
+
+            currentMonth = new Date(monthSelect).getMonth();
+
+            // Hien thi ngay trong thang
+            renderDate()
+        }
+
+        function displayInfo() {
+            // Hien thi ten thang
+            let currentMonthName = new Date(
+                currentMonth,
+                currentMonth
+            ).toLocaleString('en-us', { month: 'long' });
+
+            monthEle.innerHTML = currentMonthName;
+
+            // Hien thi nam
+            yearEle.innerHTML = currentYear;
+
+            // Hien thi ngay trong thang
+            renderDate()
+        }
+
+        //Lấy số ngày của 1 tháng
+        function getDaysInMonth() {
+            return new Date(currentYear, currentMonth + 1, 0).getDate();
+        }
+
+        //Lấy ngày bắt đầu của tháng
+        function getStarDayInMonth() {
+            return new Date(currentYear, currentMonth, 1).getDay();
+        }
+
+        function activeDayOfMoth(day) {
+            let day1 = new Date(currentYear, currentMonth, day).getDay();
+            return day1 == 0 ? 'activeSun' : day1 == 6 ? "activeSat" : ''
+        }
+        function activeCurrentDay(day) {
+            // console.log(day);
+            let day1 = new Date().toDateString();
+            let day2 = new Date(currentYear, currentMonth, day).toDateString();
+            return day1 == day2 ? 'active' : '';
+        }
+
+        //Hiển thị ngày trong tháng lên trên giao diện
+        function renderDate() {
+            let daysInMonth = getDaysInMonth();
+            let startDay = getStarDayInMonth();
+
+            dateEle.innerHTML = '';
+
+            for (let i = 0; i < startDay; i++) {
+                dateEle.innerHTML += `<div class="day"></div>`;
+            }
+            const day = new Date("2022-03-27").getDay();
+            for (let i = 0; i < daysInMonth; i++) {
+                dateEle.innerHTML += `
+                <div class="day ${activeCurrentDay(i + 1)} ${activeDayOfMoth(i + 1)}">${i + 1}</div>
+              `
+            }
+        }
+
+        function init() {
+            renderSelectYearAndMonth();
+            renderDate();
+        }
+        window.onload = init();
+    </script>
+</body>
+
+</html>

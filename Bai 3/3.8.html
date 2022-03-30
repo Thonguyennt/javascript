@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vòng lặp do ... while</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #cb6c2d;
+            padding: 1rem 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 15rem;
+            display: flex;
+            justify-content: center;
+        }
+
+
+        table td {
+            background: #fefecc;
+        }
+
+
+        table tr td {
+            border: 2px solid #e2a682;
+            padding: 0.5rem;
+        }
+
+
+        table #result {
+            display: none;
+        }
+
+        .btn-print {
+            padding: 0.2rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn-print:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+
+        .box-result {
+            display: flex;
+            justify-content: center;
+        }
+
+        .box-result .box-items {
+            display: flex;
+            flex-direction: column;
+            color: #f66e3c;
+            align-items: start;
+            width: 7rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>In Bảng cửu chương</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td> <button class="btn-print" onclick="xuat_bang_cc()">Nhập bảng cửu chương:</button></td>
+                </tr>
+                <tr id="result"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let inputResult = document.getElementById('result');
+
+
+        function showElNameLable(result) {
+            inputResult.style.display = 'contents';
+            inputResult.innerHTML = `
+            <td>
+             <div class="box-result">
+                <div class="box-items">
+                ${result}
+                </div>
+                </div>
+            </td>`
+        }
+
+        function isNumeric(str) {
+            if (typeof str != "string") return false;
+            return !isNaN(str) &&
+                !isNaN(parseFloat(str))
+        }
+
+        function xuat_bang_cc() {
+            let numberInput;
+            let result = [];
+            let i = 1;
+
+            numberInput = prompt("Nhập một số");
+
+            if (!isNumeric(numberInput)) {
+                xuat_bang_cc()
+                return;
+            };
+
+            do {
+                result.push(`${numberInput} * ${i}  =  ${i * numberInput} <br>`);
+                i++;
+            } while (i <= 10)
+
+
+            showElNameLable(result.join(''))
+        }
+
+    </script>
+</body>
+
+</html>

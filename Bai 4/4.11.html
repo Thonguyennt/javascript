@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng đối tượng window</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #cb6c2d;
+            padding: 1rem 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 40rem;
+        }
+
+
+        table tr td {
+            border: 2px solid #acacac;
+        }
+
+        .box-time {
+            width: 15rem;
+        }
+
+        .box-time #time {
+            padding: 1.1rem;
+            color: red;
+            background: black;
+            font-size: 2rem;
+            text-align: center;
+            width: 15rem;
+            overflow: hidden;
+            letter-spacing: 0.3rem;
+        }
+
+        #hello {
+            display: flex;
+            justify-content: center;
+        }
+
+        .morning {
+            font-size: 1.5rem;
+        }
+
+        .colorRed {
+            font-size: 2rem;
+            color: red;
+        }
+
+        .blink {
+            transition: fontSize 0.2s ease;
+            animation: changeColor 0.5s infinite alternate;
+        }
+
+        @keyframes changeColor {
+            0% {
+                font-size: 2rem;
+                color: red;
+            }
+
+            100% {
+                font-size: 2.5rem;
+                color: black;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <td class="box-time">
+                    <div id="time"></div>
+                </td>
+                <td>
+                    <div id="hello"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        let time = document.getElementById('time');
+        let hello = document.getElementById('hello');
+
+        function printHelloDay(hr) {
+            var currentHour = parseInt(hr);
+            var message, addClassColor;
+            if (0 <= currentHour && currentHour < 12) {
+                message = "Chào buổi sáng";
+            } else if (12 <= currentHour && currentHour < 17) {
+                message = "Chào buổi chiều";
+            } else if (17 <= currentHour && currentHour < 23) {
+                message = "Chào buổi tối";
+            }
+
+            if (currentHour == 12 || currentHour == 17 || currentHour == 0) {
+                addClassColor = "blink"
+            } else if (12 < currentHour && currentHour < 17 || 17 < currentHour && currentHour < 23) {
+                addClassColor = 'colorRed'
+            }
+
+
+            return { message, color: addClassColor };
+        }
+
+        function getCurrentTime() {
+            const currentDate = new Date();
+            var hh = currentDate.getHours();
+            var mm = currentDate.getMinutes();
+            var ss = currentDate.getSeconds();
+            var hr = currentDate.getHours();
+            var objMessage = printHelloDay(hr);
+            return {
+                time: `${hh}:${mm}:${ss}`,
+                message: objMessage.message,
+                color: objMessage.color
+            };
+        }
+
+        function showLock() {
+            objResult = getCurrentTime();
+            time.innerHTML = objResult.time;
+            hello.innerHTML = objResult.message;
+            hello.classList.add(objResult.color)
+        }
+
+
+        window.onload = function () {
+            setInterval(() => {
+                showLock()
+            }, 100);;
+        }
+
+    </script>
+</body>
+
+</html>

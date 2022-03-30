@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng hộp thoại</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        label {
+            float: left;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table td {
+            background: #dafed8;
+        }
+
+
+        table tr td input,
+        table tr td button {
+            padding: 0.2rem;
+        }
+
+        table td {
+            border: 2px solid #60e44a;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        table .labelName {
+            display: none;
+        }
+
+        table .box-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-hello {
+            padding: 0.2rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn-hello:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <table>
+            <tbody>
+                <tr id="labelName">
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box-input">
+                            <label for="nameTxt">Nhập tên mới: </label>
+                            <input type="text" name="message" id="nameTxt" placeholder="Nhập tên của bạn">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn-hello" type="button" onclick="ShowAlert()">Xuất câu chào</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var inputMessage = document.getElementById('nameTxt');
+        var labelEl = document.getElementById('labelName');
+
+        function ShowAlert() {
+            if (inputMessage.value == '') {
+                alert("Messge must be filled out");
+                return false;
+            }
+            showElNameLable(inputMessage.value)
+        }
+
+        function showElNameLable(name) {
+            inputMessage.value = name;
+            labelEl.style.display = 'contents';
+            labelEl.innerHTML = `<td><label style="color:#f75f8a;">Chào bạn ${name}</label></td>`
+        }
+
+
+        function ShowPrompt() {
+            let result = prompt("Hãy nhập tên của bạn");
+            if (result !== null && result.length > 0) {
+                showElNameLable(result);
+
+            } else {
+                alert("Name must be filled out");
+                ShowPrompt()
+            }
+        }
+
+        window.onload = ShowPrompt()
+    </script>
+</body>
+
+</html>

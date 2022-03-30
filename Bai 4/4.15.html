@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng DOM và các sự kiện</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+        :root {
+            --red: #cc0001;
+            --primary: #316ac4;
+            --blue: #401fa4;
+            --border-blue: 1px solid var(--blue);
+            --border-red: 1px solid var(--red);
+            --black: rgb(20, 20, 20);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.2s linear;
+        }
+
+        body {
+            height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            padding: 1.2rem;
+            color: var(--red);
+            text-align: center;
+
+        }
+
+        /* table */
+        .container .box-table {
+            position: relative;
+            width: 50rem;
+            height: auto;
+            border-collapse: collapse;
+        }
+
+        .box-table td,
+        .box-table th {
+            border: var(--border-blue);
+        }
+
+        .box-table thead tr,
+        .box-table tbody tr {
+            display: flex;
+            flex-direction: row;
+        }
+
+
+
+        .box-table thead tr th,
+        .box-table tbody tr td {
+            flex: 1;
+            padding: 0.5rem;
+
+        }
+
+
+        thead h3 {
+            font-size: 1.3rem;
+            color: var(--blue);
+            font-weight: bold;
+        }
+
+        tbody .bx-food,
+        tbody .bx-drink {
+            width: 80%;
+            height: 15rem;
+            border: 5px solid var(--blue);
+            border-bottom: 2px solid;
+            border-right: 2px solid;
+            margin: auto;
+            overflow-y: scroll;
+            overflow-x: visible;
+
+        }
+
+        tbody .bx-service {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+
+        tbody .bx-service input {
+            position: relative;
+            left: 6px;
+            bottom: -1px;
+            cursor: pointer;
+        }
+
+        tbody .bx-food [class],
+        tbody .bx-drink [class] {
+            padding: 0.5rem;
+            text-align: start;
+            cursor: pointer;
+            color: var(--black);
+        }
+
+        tbody .bx-food [class]:hover,
+        tbody .bx-drink [class]:hover {
+            background: var(--blue);
+            color: white;
+        }
+
+        tbody .bx-food [class].active,
+        tbody .bx-drink [class].active {
+            background: var(--blue);
+            color: white;
+        }
+
+        /* Subtable */
+        .box-subTable {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .box-subTable #txtReport {
+            text-align: start;
+        }
+
+        .box-subTable h2 {
+            color: var(--red);
+            font-size: 1rem;
+            padding: 0;
+        }
+
+
+        .box-subTable .sub-table {
+            padding: 0.5rem;
+            width: 30rem;
+            border-collapse: collapse;
+            display: none;
+            padding: 1rem;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .sub-table td,
+        .sub-table th {
+            border: var(--border-red) !important;
+        }
+
+        .sub-table td:last-child() {
+            color: var(--red);
+            font-weight: bolder;
+        }
+
+        .btn-total {
+            width: 17rem;
+            padding: 0.2rem 1rem;
+            background: var(--red);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .bx-total {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>Thực đơn ăn sáng</h2>
+        <table class="box-table">
+            <thead>
+                <tr>
+                    <th>
+                        <h3>Thức ăn</h3>
+                    </th>
+                    <th>
+                        <h3>Nước giải khát</h3>
+                    </th>
+                    <th>
+                        <h3>Thức ăn</h3>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="bx-food" id="food-items">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="bx-drink" id="drink-items">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="bx-service">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="box-subTable">
+                            <h2 id="txtReport">Hóa đơn tính tiền</h2>
+                            <table class="sub-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">
+                                            <h2 class="title-subTable">Hóa đơn tính tiền</h2>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sub_body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="bx-total">
+                            <button onclick="tinh_tien()" class="btn-total">In Hóa đơn tính tiền</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="4.9_ThuVien.js"></script>
+    <script src="mock_data.js"></script>
+
+    <script>
+        var foods = document.getElementsByClassName('bx-food')[0];
+        var drinks = document.getElementsByClassName('bx-drink')[0];
+        var services = document.getElementsByClassName('bx-service')[0];
+        var parentSubEl = document.getElementById("sub_body");
+        var subTableEl = document.getElementsByClassName('sub-table')[0];
+        var txtTextSubEl = document.getElementById('txtReport')
+
+        var listFoodsSelect = [];
+        var listDrinksSelect = [];
+        var listServiceSelect = [];
+
+
+
+        /* Function Support Start*/
+        function createElementSubTable(item, color) {
+            var corvertArray = Object.values(item);
+
+            var trTag = document.createElement('tr');
+            trTag.textContent
+            trTag.id = `sub_item_${item.index}`
+
+            let nodes = corvertArray.map(v => {
+                let td = document.createElement("td");
+                if (color) {
+                    td.setAttribute("style", "color: red; font-weight: bolder;")
+                }
+                td.innerHTML = `<span>${v}</span>`;
+                return td;
+            })
+
+            trTag.append(...nodes);
+
+            showSubTable(subTableEl);
+            hiddenSubTable(txtTextSubEl)
+            parentSubEl.appendChild(trTag);
+        }
+
+        // func create checkbox
+        function createElemntChekBox(item, className) {
+            var elItem = document.getElementsByClassName(className)[0];
+
+            var el = document.createElement("input");
+            el.type = "checkbox";
+            el.value = item.short;
+            el.id = `checkbox-${item.id}`;
+
+            elItem.appendChild(el)
+        }
+
+        // func create element 
+        function createElment(item, type) {
+            var el = document.createElement("div");
+            var newClassName = ` ${type}-item-${item.id}`
+            el.className = newClassName;
+
+            var text = document.createTextNode(item.name);
+
+            el.append(text);
+
+            switch (type) {
+                case "food":
+                    foods.appendChild(el);
+                    break;
+                case "drink":
+                    drinks.appendChild(el);
+                    break;
+                case "service":
+                    services.appendChild(el);
+                    createElemntChekBox(item, newClassName)
+                default:
+                    break;
+            }
+        }
+
+
+        function indexOfArray(arr, value) {
+            let id = parseInt(value)
+
+            if (arr.length == 0) return;
+
+            index = arr.map(function (e) { return e.id; }).indexOf(id);
+            return index;
+        }
+
+        function addClass(element, className) {
+            element.classList.add(className);
+        }
+
+        function removeClass(element, className) {
+            element.classList.remove(className);
+        }
+
+
+        function findIdInStr(str) {
+            if (!str) return;
+
+            const regex = /\d/g;
+            const arrNumber = str.match(regex);
+            var index = arrNumber && arrNumber.length > 0 ? arrNumber[0] : null;
+            return index;
+        }
+
+        function getDataReturnArr(arr, id) {
+            if (!arr && arr.length == 0) return;
+            var result = arr.find(item => item.id == id);
+            return result;
+        }
+
+        function removeDomSubtable() {
+            while (parentSubEl.lastElementChild) {
+                parentSubEl.removeChild(parentSubEl.lastElementChild);
+            }
+        }
+
+        function showSubTable(el) {
+            el.style.display = 'flex';
+        }
+
+        function hiddenSubTable(el) {
+            el.style.display = 'none';
+        }
+        /* Function Support End*/
+
+
+
+        /*Main function Start*/
+
+        function initital() {
+            listFoods.forEach(item => {
+                createElment(item, 'food')
+            });
+
+            listDrinks.forEach(item => {
+                createElment(item, 'drink')
+            });
+
+            lisServices.forEach(item => {
+                createElment(item, 'service');
+            });
+        }
+
+        async function tinh_tien() {
+
+            var totalMoney = 0;
+            await removeDomSubtable();
+            let listProductSelect = [...listFoodsSelect, ...listDrinksSelect, ...listServiceSelect]
+            if (listProductSelect.length == 0) {
+                hiddenSubTable(subTableEl);
+                showSubTable(txtTextSubEl);
+                alert("Bạn chưa chọn dịch món nào");
+                return
+            };
+            listProductSelect.map((v, index) => {
+                totalMoney += v.price;
+                return { index: index, name: v.name, price: dinh_dang_so(v.price) }
+            }).forEach(item => {
+                createElementSubTable(item);
+            });
+
+            createElementSubTable({ index: '', name: "Tổng cộng", price: dinh_dang_so(totalMoney) }, "#cc0001");
+        }
+
+        /*Main function End*/
+
+
+
+
+        //lister event food click 
+        foods.addEventListener('click', function (ev) {
+            var classSelect = `.${ev.target.classList[0]}`;
+
+            var id = findIdInStr(classSelect);
+            if (id == null) return
+
+            let data = getDataReturnArr(listFoods, id);
+
+            var itemSlect = document.querySelector(classSelect)
+
+            //  find index in listFoodsSelect
+            let index = indexOfArray(listFoodsSelect, id);
+
+            if (listFoodsSelect.length > 0 && index > -1) {
+                removeClass(itemSlect, 'active');
+                listFoodsSelect.splice(index, 1);
+
+            } else {
+                addClass(itemSlect, 'active')
+                listFoodsSelect.push(data)
+            }
+        })
+
+        //lister event drink click 
+        drinks.addEventListener('click', function (ev) {
+            var classSelect = `.${ev.target.classList[0]}`
+
+            var id = findIdInStr(classSelect);
+            if (id == null) return
+
+            let data = getDataReturnArr(listDrinks, id);
+
+            var itemSlect = document.querySelector(classSelect)
+
+            //  find index in listDrinksSelect
+            let index = indexOfArray(listDrinksSelect, id);
+
+            if (listDrinksSelect.length > 0 && index > -1) {
+                removeClass(itemSlect, 'active');
+                listDrinksSelect.splice(index, 1);
+
+            } else {
+                addClass(itemSlect, 'active')
+                listDrinksSelect.push(data)
+            }
+
+        })
+
+        //lister event service click 
+        services.addEventListener('click', function (ev) {
+            var idItemInput = ev.target.id;
+
+            var id = findIdInStr(idItemInput);
+            if (id == null) return
+
+            let data = getDataReturnArr(lisServices, id);
+
+            var iTemCheck = document.getElementById(idItemInput);
+            var isCheck = iTemCheck.checked
+            //  find index in listDrinksSelect
+            let index = indexOfArray(listServiceSelect, id);
+
+            if (listServiceSelect.length > 0 && index > -1 && !isCheck) {
+                listServiceSelect.splice(index, 1);
+            } else {
+                listServiceSelect.push(data)
+            }
+        })
+
+        window.onload = initital();
+    </script>
+</body>
+
+</html>

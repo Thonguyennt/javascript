@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cấu trúc if ... else if ... else</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #036b06;
+            padding: 1rem 0;
+        }
+
+        label {
+            color: #2a9f16;
+        }
+
+        .box-input {
+            width: 6rem;
+        }
+
+        .box-input input {
+            padding: 0.2rem;
+            width: 5rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 30rem;
+        }
+
+
+        table td {
+            border: 2px solid #60e44a;
+            background: #dafed8;
+            padding: 0.5rem;
+        }
+
+        table tr td button {
+            padding: 0.5rem;
+        }
+
+        .box-kq {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-kq {
+            margin: auto;
+            padding: 0.2rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .btn-kq:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+
+        #classification {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Xếp loại cuối năm học</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="dtbHKI">Điểm trung bình HKI: </label>
+                    </td>
+                    <td>
+                        <div class="box-input">
+                            <input type="number" name="dtbHKI" id="dtbHKI">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="dtbHKII">Điểm trung bình HKII: </label></td>
+                    <td>
+                        <div class="box-input">
+                            <input type="number" name="dtbHKII" id="dtbHKII">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="result">Điểm trung bình cuối năm: </label></td>
+                    <td>
+                        <div class="box-input">
+                            <input type="number" name="result" id="result" readonly>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Xếp loại: </label></td>
+                    <td>
+                        <div id="classification"></div>
+                    </td>
+                </tr>
+                <tr class="bx-btn">
+                    <td colspan="2">
+                        <div class="box-kq">
+                            <button class="btn-kq" type="button" onclick="showResult()">Xuất kết quả</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let inputDTBHKI = document.getElementById('dtbHKI');
+        let inputDTBHKII = document.getElementById('dtbHKII');
+        let inputResult = document.getElementById('result');
+        let classification = document.getElementById('classification');
+        let resultAVG = 0;
+
+        function showResult() {
+            var DTB_HKI = parseInt(inputDTBHKI.value);
+            var DTB_HKII = parseInt(inputDTBHKII.value);
+            if (!DTB_HKI || !DTB_HKII) return;
+
+            var resultAVG = (DTB_HKI + (DTB_HKII * 2)) / 3;
+
+            inputResult.value = resultAVG;
+
+            if (9 <= resultAVG && resultAVG <= 10) {
+                classification.innerText = "Giỏi"
+            } else if (7 <= resultAVG && resultAVG <= 9) {
+                classification.innerText = "Khá"
+            } else if (5 <= resultAVG && resultAVG <= 7) {
+                classification.innerText = "Trung bình"
+            } else {
+                classification.innerText = "Yếu"
+            }
+        }
+
+    </script>
+</body>
+
+</html>

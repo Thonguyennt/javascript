@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng các đối tượng</title>
+</head>
+
+<style type="text/css">
+    :root {
+        --border-gray: 2px solid #a2c0c1;
+        --green: #018a46;
+        --green-bold: #6baa66;
+        --greed-lighter: #c2f9c8;
+        --yellow: #fcf70f;
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        font-size: 62.5%;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        scroll-margin-bottom: 9rem;
+    }
+
+    body {
+        overflow: auto;
+        width: 100%;
+        height: 100vh;
+    }
+
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 3rem 2rem;
+        font-size: 1.8rem;
+        margin: 10rem 22rem;
+        overflow: hidden;
+    }
+
+    .container .title-header {
+        text-align: center;
+        padding: 1rem;
+        background: var(--green);
+        color: var(--yellow);
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 0 6rem;
+        transition: all 0.2s linear;
+        transform: translateX(100%);
+        opacity: 0;
+        animation: fadeIn 2s forwards;
+        margin-bottom: 4rem
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
+
+
+    table {
+        border-collapse: collapse;
+    }
+
+
+    table tr td {
+        border: var(--border-gray);
+        padding: 0.5rem;
+    }
+
+
+
+    img {
+        width: 100%;
+    }
+
+
+    .box-content {
+        display: flex;
+        flex-direction: row;
+        margin-top: 4rem;
+    }
+
+    .box-content .box-center {
+        flex: 3;
+        border: var(--border-gray);
+    }
+
+    .box-content .box-left,
+    .box-content .box-right {
+        flex: 1;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5rem;
+        border: var(--border-gray);
+    }
+
+    .box-center h3 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        font-style: italic;
+        color: var(--green-bold);
+        background: var(--greed-lighter);
+        margin-bottom: 3rem;
+    }
+
+    .box-text .title {
+        margin-left: 1rem;
+        font-weight: bold;
+    }
+
+    .box-text .title span {
+        background: var(--greed-lighter);
+    }
+
+    .box-text .text-content {
+        padding-left: 3rem;
+        padding-right: 1rem;
+    }
+
+    .active {
+        position: fixed;
+        right: 0;
+        left: 0rem;
+        top: 5rem;
+        z-index: 1000;
+    }
+
+    .activeImg {
+        position: fixed;
+        width: 10%;
+        top: 26rem;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h2 class="title-header">6 biểu tượng thiên nhiên của phần lan</h2>
+        <table>
+            <tr>
+                <td style="width:15%">
+                    <div class="box-left">
+                        <div class="box-img">
+                            <img src="../assets/1.png" alt="">
+                            <img src="../assets/2.png" alt="">
+                        </div>
+
+                    </div>
+                </td>
+                <td style="width: 90rem;">
+                    <div class="box-center">
+                        <h3>Một cuộc bầu chọn thập kỷ 80 cho thấy thiên nga, gấu, cá pecca, cây
+                            buló, hoa lan chuông và đá granite là những biểu tượng thể hiện
+                            quyển năng, truyền thống của đất nước Bắc Âu. </h3>
+
+                        <div class="box-text">
+                            <div class="title">1. <span>Thiên nga</span></div>
+                            <div class="text-content">
+                                Thiên nga có lẽ đã được coi là biểu tượng của Phần Lan từ thuở xa
+                                xưa. Ở những bức phác hoạ trên đá có niên đại hàng nghìn năm ở hồ
+                                Onega, thiên nga đã được thể hiện như một sự tích kỳ bi. Ngoài ra,
+                                hình ảnh chú thiên nga trắng muốt bay trên nền trời xanh được liên hệ
+                                với lá cờ của Phần Lan, có nền trắng với sọc xanh. Không chi thế,
+                                thiên nga là con vật phổ biến nhất được đưa vào các clip quảng cáo,
+                                và là dấu hiệu đảm bảo hàng hoá không gây nhiễm cho môi trưởng
+                            </div>
+                        </div>
+
+                        <div class="box-text">
+                            <div class="title">2. <span>Chúa tể của miền hoang dã</span></div>
+                            <div class="text-content">
+                                Hiện ở Phần Lan có chừng 1.000 con gầu. Được coi là biểu tượng
+                                tiêu biểu, nhưng người Phần Lan đôi khi không cảm thấy thoải mái với
+                                con vật này. Lý do là người thu thuế từ trước đến nay đưoc thể hiện
+                                dưới hình ảnh con gấu với chiếc mũ lưởi trai và túi thu tiến to đùng.
+                            </div>
+                        </div>
+
+                        <div class="box-text">
+                            <div class="title">3. <span>Hoa lan chuông</span></div>
+                            <div class="text-content">
+                                Hoa lan chuỗng được biết đến là một loại thảo dược, đông thời cũng
+                                chứa chất đốc chết người. Hoa nở rô vào tháng 6 với mùi hương tỉnh
+                            </div>
+                        </div>
+
+                        <div class="box-text">
+                            <div class="title">4. <span>Cây bulô</span></div>
+                            <div class="text-content">
+                                Thế kỷ 19, cây bulo được lãng mạn hoá và đi vào văn chương khá
+                                nhiều. Truyện cổ tích Cây bulô và ngôi sao của Zacharias Topelius kể
+                                về hai đứa trẻ bị lạc. Sau nhiều ngày tìm kiếm, chúng trở về được ngôi
+                                nhà yêu dấu nhờ nhận ra cây bulô quen thuộc trước sân. Ngày nay,
+                                hình ảnh cô gái mặc trang phục truyền thống đựa vào cây bulô được
+                                coi là biểu tượng của Phần Lan, có tới hàng trăm thiệp mừng mang
+                                hình ảnh tương tự. Thậm chỉ có một người đàn ông trẻ đã cầu hôn với
+                                cô dâu tương lai bằng chiếc nhẫn làm từ vỏ cây bulô.
+                            </div>
+                        </div>
+
+                        <div class="box-text">
+                            <div class="title">5. <span>Cá pecca</span></div>
+                            <div class="text-content">
+                                Thế kỷ 19, cây bulo được lãng mạn hoá và đi vào văn chương khá
+                                nhiều. Truyện cổ tích Cây bulô và ngôi sao của Zacharias Topelius kể
+                                về hai đứa trẻ bị lạc. Sau nhiều ngày tìm kiếm, chúng trở về được ngôi
+                                nhà yêu dấu nhờ nhận ra cây bulô quen thuộc trước sân. Ngày nay,
+                                hình ảnh cô gái mặc trang phục truyền thống đựa vào cây bulô được
+                                coi là biểu tượng của Phần Lan, có tới hàng trăm thiệp mừng mang
+                                hình ảnh tương tự. Thậm chỉ có một người đàn ông trẻ đã cầu hôn với
+                                cô dâu tương lai bằng chiếc nhẫn làm từ vỏ cây bulô.
+                            </div>
+                        </div>
+
+                        <div class="box-text">
+                            <div class="title">6. <span>Đá granite</span></div>
+                            <div class="text-content">
+                                Granite được hình thành từ thạch anh, Fenspat và mica cùng một số
+                                loại khoáng chất khác. Ở Phần Lan, ngoài việc xây dựng. granite
+                                cũng được sử dụng cho điều khắc.
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td style="width:15%">
+                    <div class="box-right">
+                        <div class="box-img">
+                            <img src="../assets/3.png" alt="">
+                            <img src="../assets/4.png" alt="">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <script>
+        document.body.addEventListener("scroll", () => {
+            if (document.documentElement.scrollTop > 100 || document.body.scrollTop > 100) {
+                document.querySelector('.title-header').classList.add('active')
+                document.querySelector('.box-left .box-img').classList.add('activeImg')
+                document.querySelector('.box-right .box-img').classList.add('activeImg')
+            } else {
+                document.querySelector('.title-header').classList.remove('active')
+                document.querySelectorAll('.box-left .box-img').classList.remove('activeImg')
+                document.querySelector('.box-right .box-img').classList.add('activeImg')
+            }
+        })
+    </script>
+</body>
+
+</html>

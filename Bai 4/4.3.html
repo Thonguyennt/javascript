@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng đối tượng String</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #cb6c2d;
+            padding: 1rem 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 30rem;
+        }
+
+
+        label {
+            float: left;
+            color: #de8e33;
+        }
+
+        table td {
+            background: #fefecc;
+        }
+
+
+        table tr td {
+            border: 2px solid #e2a682;
+            padding: 0.5rem;
+        }
+
+        .box-btn-print {
+            display: flex;
+            justify-content: center;
+        }
+
+        .box-btn-print .btn-print {
+            padding: 0.1rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .box-btn-print .box-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .box-btn-print .btn-print:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+
+        .txtRelace {
+            background: #0c019e;
+            margin: 0 2px;
+            color: white;
+        }
+
+        .box-result {
+            color: #de8e33;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Tìm và thay thế</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td><label>Nhập một chuỗi : </label></td>
+                    <td>
+                        <textarea id="txtContent" name="w3review" rows="4" cols="30"></textarea>
+                        <div id="result" class="box-result"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>
+                            Nhập chuỗi tìm
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtFind">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>
+                            Nhập chuỗi thay thế
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtReplace">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="box-btn-print">
+                            <button class="btn-print" onclick="tim_thay_the()">Tìm và thay thế</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./4.9_ThuVien.js"></script>
+    <script>
+        let inputContent = document.getElementById('txtContent');
+        let inputFind = document.getElementById('txtFind');
+        let inputReplace = document.getElementById('txtReplace');
+        let inputResult = document.getElementById('result');
+
+
+        function showElNameLable(result) {
+            inputResult.style.display = 'flex';
+            inputResult.innerHTML = result
+        }
+
+        function tim_thay_the() {
+            var content = inputContent.value;
+            var find = trim(inputFind.value);
+            var replace = trim(inputReplace.value);
+            listStr = [];
+
+
+            if (!content) {
+                alert("Bạn chưa nhập chuỗi nào");
+                return
+            };
+
+            if (!find) {
+                alert("Bạn chưa nhập chuỗi cần thay thế");
+                return
+            };
+
+            if (!replace) {
+                alert("Bạn chưa nhập chuỗi thay thế");
+                return
+            };
+
+
+            listStr = trim(content).split(' ');
+
+            i = 0
+            while (i <= listStr.length) {
+                if (listStr[i] == find) {
+                    listStr[i] = `<span class="txtRelace">${replace}</span>`
+                }
+                i++
+            }
+
+            if (listStr.length > 0) {
+                console.log(listStr)
+                showElNameLable(listStr.join(' '));
+            } else {
+                console.log("tho nguyen")
+            }
+
+
+        }
+
+    </script>
+</body>
+
+</html>

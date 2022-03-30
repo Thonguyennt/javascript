@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng đối tượng Date</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fb009f;
+            padding: 1rem 0;
+        }
+
+        input {
+            width: 5rem;
+            padding: 0.2rem;
+        }
+
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 30rem;
+        }
+
+        table .box-group-input {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        table .box-group-input .item {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        label {
+            color: #a92d38;
+            font-weight: bold;
+        }
+
+
+        table tr td {
+            border: 2px solid #fe90d9;
+            background: #fee8fd;
+            padding: 0.5rem;
+        }
+
+        .box-btn-print {
+            display: flex;
+            justify-content: center;
+        }
+
+        .box-btn-print .btn-print {
+            padding: 0.1rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .box-btn-print .box-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .box-btn-print .btn-print:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+
+        .box-input {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box-result {
+            display: none;
+        }
+
+        .box-result #result {
+            font-size: 1.1rem;
+            padding: 0.2rem;
+            text-align: center;
+            color: #a92d38;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Tìm ngày của mẹ</h2>
+        <table>
+            <tr>
+                <td>
+                    <div class="box-input">
+                        <label>Nhập năm</label>
+                        <input type="number" id="year">
+                    </div>
+                </td>
+            </tr>
+            <tr class="box-result">
+                <td>
+                    <div id="result"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="box-btn-print">
+                        <button class="btn-print" onclick="la_so()">Thực hiện</button>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+
+    <script>
+        let inputYear = document.getElementById('year');
+        let inputResult = document.getElementById('result');
+        var boxResult = document.getElementsByClassName('box-result')[0];
+
+
+        function formatDate(str) {
+            const currentDate = new Date(str.toString())
+            var strArray = ['Mon', 'Tue', 'Web', 'Thus', 'Fri', 'Sun'];
+            var dayOfMonth = strArray[parseInt(currentDate.getDay()) - 1];
+            var d = currentDate.getDate() + 1;
+
+            return {
+                day: d,
+                dayOfMonth
+            };
+        }
+
+        function showElNameLable(result) {
+            inputResult.style.display = 'flex';
+            inputResult.innerHTML = `<td style="display:inline-block">${result}</td>`
+        }
+
+
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        function la_so() {
+            let year = inputYear.value;
+            let month = '5';
+            let listSunDate = [];
+            let indexNext = 0
+            console.log(typeof year);
+            if (!year) {
+                alert("Bạn chưa nhập ngày của mẹ");
+                return
+            }
+
+            if (year.length < 4 || year.length > 4) {
+                alert("Bạn chưa nhập năm không đúng");
+                return
+            }
+
+            let dateNumber = daysInMonth(month, year);
+            let i = 0;
+            while (i <= dateNumber) {
+                let str = `${year + '/' + month + '/' + i}`;
+
+                let objDate = formatDate(str);
+                if (objDate.dayOfMonth === 'Sun') {
+                    listSunDate.push(objDate.day);
+                    indexNext = objDate.day;
+                }
+
+                i = indexNext > 0 ? indexNext + 6 : i + 1;
+            }
+
+            let str = `${listSunDate[1] + '/' + month + '/' + year}`;
+            inputResult.innerHTML = `Ngày của mẹ trong năm ${year} là : ${str}`
+            boxResult.style.display = "contents";
+        }
+
+    </script>
+</body>
+
+</html>

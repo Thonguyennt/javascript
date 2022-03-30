@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng đối tượng Date và Boolean</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 2rem 0;
+            font-style: italic;
+            color: #fa2c27;
+        }
+
+        input {
+            width: 5rem;
+            padding: 0.2rem;
+        }
+
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 30rem;
+        }
+
+        table .box-group-input {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        table .box-group-input .item {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        label {
+            color: #5e5b5d;
+            font-weight: bold;
+        }
+
+
+        table tr td {
+            border: 2px solid #7b5cbd;
+            padding: 0.5rem;
+        }
+
+        .box-btn-print {
+            display: flex;
+            justify-content: center;
+        }
+
+        .box-calender {
+            width: 14rem;
+            height: 18rem;
+            border: 0.7rem solid #cdcece;
+            overflow: hidden;
+            display: none;
+        }
+
+        .box-calender .calender {
+            height: 94%;
+            margin: 0.5rem;
+            border: 1px solid #d7dce0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .calender .year {
+            color: #f06f74;
+            flex: 1 1 2%;
+            font-weight: bold;
+            padding-top: 0.5rem;
+        }
+
+        .calender .month {
+            flex: 1 1 20%;
+            font-size: 2rem;
+            color: #5d2291;
+            font-weight: 500;
+        }
+
+        .calender .date {
+            flex: 1 1 20%;
+            font-size: 7rem;
+            color: #fc0203;
+        }
+
+        .calender .day {
+            flex: 1 1 8%;
+            font-size: 3rem;
+            font-weight: 500;
+        }
+
+        .box-btn-print .btn-print {
+            padding: 0.1rem 1rem;
+            box-shadow: 1px 2px 3px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .box-btn-print .box-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .box-btn-print .btn-print:active {
+            background: #8585858c;
+            transform: translateY(4px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box-calender">
+            <div class="calender">
+                <div class="year" id="yearCalender"></div>
+                <div class="month" id="monthCalender"></div>
+                <div class="date" id="dateCalender"></div>
+                <div class="day" id="dayCalender"></div>
+            </div>
+
+        </div>
+        <h2 id="txtHello"></h2>
+
+        <table>
+            <tr>
+                <td>
+                    <div class="box-group-input">
+                        <div class="item">
+                            <label>Ngày</label>
+                            <input type="number" id="date">
+                        </div>
+                        <div class="item">
+                            <label>Tháng</label>
+                            <input type="number" id="month">
+                        </div>
+                        <div class="item">
+                            <label>Năm</label>
+                            <input type="number" id="year">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="box-btn-print">
+                        <button class="btn-print" onclick="in_lich()">In lịch</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <script>
+        var inputDate = document.getElementById('date');
+        var inputMoth = document.getElementById('month');
+        var inputYear = document.getElementById('year');
+
+        var dateEl = document.getElementById('dateCalender');
+        var monthEl = document.getElementById('monthCalender');
+        var yearEl = document.getElementById('yearCalender');
+        var dayEl = document.getElementById('dayCalender');
+        var helloEl = document.getElementById('txtHello');
+        var boxContainerEl = document.getElementsByClassName('box-calender')[0];
+
+
+        function printHelloDay(hr) {
+            var currentHour = parseInt(hr);
+            var message;
+            if (0 < currentHour && currentHour <= 12) {
+                message = "Chào buổi sáng!";
+            } else if (12 < currentHour && currentHour <= 17) {
+                message = "Chảo buổi chiều!";
+            } else {
+                message = "Chảo buổi tối!";
+            }
+            return message;
+        }
+
+        function getCurrentTime() {
+            const currentDate = new Date();
+            var hh = currentDate.getHours();
+            var mm = currentDate.getMinutes();
+            var ss = currentDate.getSeconds();
+            return `${hh}:${mm}:${ss}`;
+        }
+
+        function formatDate(str) {
+            var currentDate = getCurrentTime();
+            var strNew = `${str + ', ' + currentDate}`
+            const currentDateInput = new Date(strNew)
+            console.log(currentDateInput);
+
+            var strArray = ['Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Chủ nhật'];
+            var dayOfMonth = strArray[parseInt(currentDateInput.getDay()) - 1];
+            var d = currentDateInput.getDate();
+            var m = currentDateInput.getMonth() + 1;
+            var y = currentDateInput.getFullYear();
+            var hr = currentDateInput.getHours();
+            var message = printHelloDay(hr);
+
+            var dateObj = {
+                dayOfMonth,
+                date: d,
+                month: `Tháng ${m}`,
+                year: y,
+                message,
+            }
+            return dateObj;
+        }
+
+
+        function checkValidDate(str) {
+            const d = new Date(str)
+            let isValid = false;
+            if (Object.prototype.toString.call(d) === "[object Date]") {
+                if (isNaN(d)) {
+                    alert("Date is not valid")
+                    isValid = false;
+                } else {
+                    isValid = true;
+                }
+            } else {
+                alert("Không phải date")
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        function renderCalender(objDate) {
+            yearEl.innerText = objDate.year;
+            monthEl.innerText = objDate.month;
+            dateEl.innerText = objDate.date;
+            dayEl.innerText = objDate.dayOfMonth;
+            helloEl.innerText = objDate.message;
+        }
+
+
+        function in_lich() {
+            let date = inputDate.value;
+            let month = inputMoth.value;
+            let year = inputYear.value;
+
+
+            if (!date) {
+                alert("Bạn chưa nhập ngày ")
+                return
+            }
+
+            if (!month) {
+                alert("Bạn chưa nhập tháng ")
+                return
+            }
+
+            if (!year) {
+                alert("Bạn chưa nhập năm ")
+                return
+            }
+
+
+            let str = `${year + '/' + month + '/' + date}`;
+
+            let dateValid = checkValidDate(str);
+
+            if (!dateValid) return;
+
+            let objDate = formatDate(str);
+            console.log(objDate);
+            renderCalender(objDate);
+            boxContainerEl.style.display = "block";
+        }
+
+    </script>
+</body>
+
+</html>
